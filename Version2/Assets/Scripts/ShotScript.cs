@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserController : MonoBehaviour
+public class ShotScript : MonoBehaviour
 {
 	public float Speed;
 	public Controller Player;
     public Transform PlayerPosition;
     public Transform TargetPosition;
+
+	public static float Damage = 1f;
 //	public GameObject enemyDeathEffect;
 
 
@@ -29,6 +31,15 @@ public class LaserController : MonoBehaviour
         //Destroy(gameObject, 5); // 20sec
         //GetComponent<Rigidbody2D>().velocity = new Vector2(Speed, GetComponent<Rigidbody2D>().velocity.y);
     }
+
+	void OnTriggerEnter2D( Collider2D other)
+	{
+		if (other.tag == "Enemy")
+		{
+			other.gameObject.GetComponent <EnemyHealth> ().Health-=Damage;
+			Destroy (this.gameObject);
+		}
+	}
 
 //	void OnTriggerEnter2D(Collider2D other)
 //	{
